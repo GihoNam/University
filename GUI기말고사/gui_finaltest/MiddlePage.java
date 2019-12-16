@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -33,23 +34,34 @@ public class MiddlePage extends JFrame {
 	}
 	
 	public void ActionPage(String movie,boolean select) {
+		System.out.println(movie);
+		ImageIcon icon = new ImageIcon("MainBack.png");
+		JPanel backgorund = new JPanel(){
+	        public void paintComponent(Graphics g) {
+	            // Approach 1: Dispaly image at at full size
+	            g.drawImage(icon.getImage(), 0, 0, null);
+	            setOpaque(false); //그림을 표시하게 설정,투명하게 조절
+	            super.paintComponent(g);
+	        }
+	    };
 		JPanel mainpanel = new JPanel();
 		JPanel uppanel = new JPanel();
 		JPanel rightpanel = new JPanel();
 		JPanel leftpanel = new JPanel();
 		
-		rightpanel.setBackground(Color.blue);
-		leftpanel.setBackground(Color.red);
-		
+
 		rightpanel.setPreferredSize(new Dimension(300,250));
 		leftpanel.setPreferredSize(new Dimension(300,250));
-		
 		mainpanel.setLayout(new BorderLayout());
-		month.addActionListener(new ComboEvent());
+		mainpanel.setOpaque(false);
+		uppanel.setOpaque(false);
+		leftpanel.setOpaque(false);
+		rightpanel.setOpaque(false);
+		month.addActionListener(new ComboEvent(movie));
 		uppanel.add(month1);
 		uppanel.add(month);
 		
-		day.addActionListener(new ComboEvent());
+		day.addActionListener(new ComboEvent(movie));
 		uppanel.add(day1);
 		uppanel.add(day);
 		
@@ -57,18 +69,27 @@ public class MiddlePage extends JFrame {
 		mainpanel.add(uppanel, "North");
 		mainpanel.add(leftpanel, "West");
 		mainpanel.add(rightpanel, "East");
+		backgorund.add(mainpanel);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(800, 450);
-		this.add(mainpanel);
+		this.add(backgorund);
 		this.setVisible(true);
 	}
 	class ComboEvent implements ActionListener{
+		
+		String name;
+		
+		public ComboEvent(String movie_name) {
+			name = movie_name;
+		}
 
 		@Override
 		
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			String combo = e.getActionCommand();
-			new FinalPage(combo);
+			MiddlePage.this.setVisible(false);
+			new FinalPage(name);
 		}
 	}
 

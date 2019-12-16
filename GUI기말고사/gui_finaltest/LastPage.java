@@ -1,20 +1,20 @@
 package gui_finaltest;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.swing.*;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
-public class FinalPage extends JFrame{
-	public FinalPage(String b) {
+public class LastPage extends JFrame{
+	public LastPage(String b) {
 		ActionPage(b,true);
 	}
 	public void ActionPage(String name,boolean a) {
 		ArrayList result = new ArrayList();
-		DB db = new DB();
-		result = db.selectContents(name);
+		//DB db = new DB();
+		//result = db.selectContents(name);
 		System.out.println();
 		ImageIcon icon = new ImageIcon("MainBack.png");;
 		this.setTitle("체크박스");
@@ -130,3 +130,4 @@ public class FinalPage extends JFrame{
 	}
 	
 }
+
